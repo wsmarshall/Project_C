@@ -63,7 +63,6 @@ public class ArrayHeadTailListInterface<T> implements HeadTailListInterface<T> {
 
 	@Override
 	public void display() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -75,8 +74,7 @@ public class ArrayHeadTailListInterface<T> implements HeadTailListInterface<T> {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return numberOfElements;
 	}
 
 	@Override
