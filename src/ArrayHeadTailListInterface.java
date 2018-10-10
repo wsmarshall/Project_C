@@ -13,25 +13,36 @@ public class ArrayHeadTailListInterface<T> implements HeadTailListInterface<T> {
 	}
 
 	public ArrayHeadTailListInterface(int initial_capacity) {
-		listArray = (T[]) new Array[initial_capacity - 1]; //cast should be fine because the initialized Array is populated with null entries
-		numberOfElements = initial_capacity;
+//		listArray = (T[]) new Array[initial_capacity - 1]; //cast should be fine because the initialized Array is populated with null entries
+//		numberOfElements = initial_capacity;
+		// Changed to tempList
+		// Changed from Array to Object
+		T[]tempList = (T[]) new Object[initial_capacity]; //cast should be fine because the initialized Array is populated with null entries
+		listArray = tempList;
+		// changed number of elements to 0 
+		numberOfElements = 0;
+
 	}
 
 	@Override
 	public void addFront(T newEntry) {
-		// TODO Auto-generated method stub
-
+		listArray[0] = newEntry;
+		numberOfElements++;
+		ensureCapacity();
 	}
 
 	@Override
 	public void addBack(T newEntry) {
-		// TODO Auto-generated method stub
+		ensureCapacity();
+		this.listArray[numberOfElements] = newEntry;
+		numberOfElements++;
 
 	}
 
 	@Override
 	public T removeFront() {
-		// TODO Auto-generated method stub
+		listArray[0] = null;
+		
 		return null;
 	}
 
@@ -44,7 +55,6 @@ public class ArrayHeadTailListInterface<T> implements HeadTailListInterface<T> {
 	// mine
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
 		T[] tempArray = (T[]) new Array[numberOfElements];
 		listArray = (T[]) tempArray;
 	}
@@ -82,7 +92,19 @@ public class ArrayHeadTailListInterface<T> implements HeadTailListInterface<T> {
 	@Override
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
-		return false;
+		return numberOfElements == 0;
+		
 	}
 
+	private void ensureCapacity() {
+		// If array is full, triple its length
+		int capacity = listArray.length;
+		if (numberOfElements >= capacity) {
+			int newCapacity = 3 * capacity;
+//			listArray = Arrays.copyOf(listArray, newCapacity);
+			T[]tempList = (T[]) new Object[newCapacity]; //cast should be fine because the initialized Array is populated with null entries
+			listArray = tempList;
+		}
+		
+	}
 }
