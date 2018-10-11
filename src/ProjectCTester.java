@@ -17,6 +17,7 @@ public class ProjectCTester {
 		System.out.println("0 elements; capacity = 10");
 		list.display();
 		System.out.println();
+
 		
 		// test addFront to emtpy
 		System.out.println("\n\n********TESTING ADD TO FRONT");
