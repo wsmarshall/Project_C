@@ -23,14 +23,18 @@ public class ArrayHeadTailListInterface<T> implements HeadTailListInterface<T> {
 		numberOfElements = 0;
 
 	}
-
+	//will's
 	@Override
 	public void addFront(T newEntry) {
+		ensureCapacity();
+		for(int i = numberOfElements; i > 0; i--) {
+			listArray[i] = listArray[i - 1];
+		}
 		listArray[0] = newEntry;
 		numberOfElements++;
-		ensureCapacity();
-	}
+}
 
+	// Sam's
 	@Override
 	public void addBack(T newEntry) {
 		ensureCapacity();
@@ -39,61 +43,111 @@ public class ArrayHeadTailListInterface<T> implements HeadTailListInterface<T> {
 
 	}
 
+	// Sam's
 	@Override
 	public T removeFront() {
-		listArray[0] = null;
-		
-		return null;
+		if (!this.isEmpty()) {
+			T returnObj = listArray[0];
+//			T[] tempArray = (T[]) new Object[listArray.length];
+			for (int i = 0; i < numberOfElements; i++) {
+//				tempArray[i] = listArray[i];
+				listArray[i] = listArray[i + 1];
+			}
+			listArray[numberOfElements -1 ] = null;
+			numberOfElements--;
+			return returnObj;
+		} else {
+			return null;
+		}
+
 	}
 
-	@Override
-	public T removeBack() {
-		// TODO Auto-generated method stub
-		return null;
+	//will's
+		@Override
+		public T removeBack() {
+			T returnObj = null;
+			if(!isEmpty()) {
+				returnObj = listArray[numberOfElements - 1];
+				listArray[numberOfElements - 1] = null;
+				numberOfElements--;
+			}
+			return returnObj;
 	}
 
 	// mine
 	@Override
 	public void clear() {
-		T[] tempArray = (T[]) new Array[numberOfElements];
+//		T[] tempArray = (T[]) new Array[numberOfElements];
+		// changed Array[] to Object[] to avoid type mismatch with addBack
+		// changed numberOfElements to listArray.length
+		T[] tempArray = (T[]) new Object[listArray.length];
 		listArray = (T[]) tempArray;
+		
+		// added
+		numberOfElements = 0;
 	}
 
 	// mine
 	@Override
 	public T getEntry(int givenPosition) throws IllegalArgumentException {
-		if (this.isEmpty()) {
-			throw new IllegalArgumentException("Not a valid position - this structure appears to be empty.");
-		} else if (listArray[givenPosition] == null) {
-			throw new IllegalArgumentException("Not a valid position - the value is null.");
+		// validate position
+		if (givenPosition >= 0 && givenPosition < numberOfElements) {			
+			if (this.isEmpty()) {
+	//			throw new IllegalArgumentException("Not a valid position - this structure appears to be empty.");
+				// return null if out of bounds (see HeadTailListInterface)
+				return null;
+			} else if (listArray[givenPosition] == null) {
+	//			throw new IllegalArgumentException("Not a valid position - the value is null.");
+				// return null if out of bounds (see HeadTailListInterface)
+				return null;
+	
+			} else {
+				return listArray[givenPosition];
+			}
 		} else {
-			return listArray[givenPosition];
+			return null;
 		}
 	}
 
+	// Sam's
 	@Override
 	public void display() {
-		// TODO Auto-generated method stub
-
+		System.out.print(numberOfElements + " elements; capacity = " + this.listArray.length + "\t");
+		if (!this.isEmpty()) {
+			System.out.print("[");
+			for (int i = 0; i < numberOfElements - 1; i++) {
+				System.out.print(listArray[i] + ", ");
+			}
+			System.out.println(listArray[numberOfElements - 1] + "]");
+		}
 	}
 
-	@Override
-	public int contains(T anEntry) {
-		// TODO Auto-generated method stub
-		return 0;
+	//will's
+		@Override
+		public int contains(T anEntry) {
+			int indexOfEntry = -1;
+			boolean found = false;
+			int counter = 0;
+			while(counter < numberOfElements && !found){
+				if(listArray[counter].equals(anEntry)){
+					indexOfEntry = counter;
+					found = true;
+				}
+				counter++;
+			}
+			return indexOfEntry;
 	}
 
+	// Sam's
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return numberOfElements;
 	}
 
+	//will's
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
 		return numberOfElements == 0;
-		
 	}
 
 	private void ensureCapacity() {
@@ -101,9 +155,12 @@ public class ArrayHeadTailListInterface<T> implements HeadTailListInterface<T> {
 		int capacity = listArray.length;
 		if (numberOfElements >= capacity) {
 			int newCapacity = 3 * capacity;
-//			listArray = Arrays.copyOf(listArray, newCapacity);
 			T[]tempList = (T[]) new Object[newCapacity]; //cast should be fine because the initialized Array is populated with null entries
+			for (int i = 0; i < listArray.length; i++) {
+				tempList[i] = listArray[i];
+			}
 			listArray = tempList;
+			
 		}
 		
 	}
