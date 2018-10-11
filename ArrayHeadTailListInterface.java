@@ -20,6 +20,7 @@ public class ArrayHeadTailListInterface<T> implements HeadTailListInterface<T> {
 	//will's
 	@Override
 	public void addFront(T newEntry) {
+		ensureCapacity();
 		for(int i = numberOfElements; i > 0; i--) {
 			listArray[i] = listArra y[i - 1];
 		}
