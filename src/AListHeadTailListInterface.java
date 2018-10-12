@@ -1,67 +1,72 @@
 
 public class AListHeadTailListInterface<T extends Comparable<? super T>> implements HeadTailListInterface<T> {
 
-	ListInterface<T> aList; //initialize to type AList;
+	ListInterface<T> aList = new AList(); //initialize to type AList;
 	
 	
 	@Override
 	public void addFront(T newEntry) {
-		// TODO Auto-generated method stub
+		((AList) aList).makeRoom(1);
+		aList.add(1, newEntry);
 		
 	}
 
 	@Override
 	public void addBack(T newEntry) {
-		// TODO Auto-generated method stub
+		aList.add(aList.getLength()+1, newEntry);
 		
 	}
 
 	@Override
 	public T removeFront() {
-		// TODO Auto-generated method stub
-		return null;
+		T temp = aList.remove(1);
+		((AList) aList).removeGap(1);
+		return temp;
 	}
 
 	@Override
 	public T removeBack() {
-		// TODO Auto-generated method stub
-		return null;
+		return aList.remove(aList.getLength());
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		aList.clear();
 	}
 
 	@Override
 	public T getEntry(int givenPosition) {
-		// TODO Auto-generated method stub
-		return null;
+		return aList.getEntry(givenPosition);
 	}
 
 	@Override
 	public void display() {
-		// TODO Auto-generated method stub
+		System.out.println(aList.toArray().toString());
 		
 	}
 
 	@Override
 	public int contains(T anEntry) {
-		// TODO Auto-generated method stub
-		return 0;
+		int containsPosition = -1;
+		if(aList.contains(anEntry)) {
+			for(int i = 1; i<=aList.getLength(); i++) {
+				if(((AList) aList).list[i].equals(anEntry)) {
+					return i;
+					
+				}
+			}
+		}
+		return containsPosition;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return aList.getLength();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return aList.isEmpty();
 	}
 
 }

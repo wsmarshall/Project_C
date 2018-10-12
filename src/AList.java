@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @version 4.0
  */
 public class AList<T extends Comparable<? super T>> implements ListInterface<T> {
-	private T[] list; // Array of list entries; ignore list[0]
+	T[] list; // Array of list entries; ignore list[0]
 	private int numberOfEntries;
 	private boolean initialized = false;
 	private static final int DEFAULT_CAPACITY = 25;
@@ -185,7 +185,7 @@ public class AList<T extends Comparable<? super T>> implements ListInterface<T> 
 	
 	// Doubles the capacity of the array list if it is full.
 	// Precondition: checkInitialization has been called.
-	private void ensureCapacity() {
+	void ensureCapacity() {
 		int capacity = list.length - 1;
 		if (numberOfEntries >= capacity) {
 			int newCapacity = 2 * capacity;
@@ -198,7 +198,7 @@ public class AList<T extends Comparable<? super T>> implements ListInterface<T> 
 	// Precondition: 1 <= newPosition <= numberOfEntries + 1;
 	// numberOfEntries is list's length before addition;
 	// checkInitialization has been called.
-	private void makeRoom(int newPosition) {
+	void makeRoom(int newPosition) {
 		assert (newPosition >= 1) && (newPosition <= numberOfEntries + 1);
 
 		int newIndex = newPosition;
@@ -215,7 +215,7 @@ public class AList<T extends Comparable<? super T>> implements ListInterface<T> 
 	// Precondition: 1 <= givenPosition < numberOfEntries;
 	// numberOfEntries is list's length before removal;
 	// checkInitialization has been called.
-	private void removeGap(int givenPosition) {
+	void removeGap(int givenPosition) {
 		assert (givenPosition >= 1) && (givenPosition < numberOfEntries);
 
 		int removedIndex = givenPosition;
