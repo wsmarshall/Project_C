@@ -50,8 +50,16 @@ public class AListHeadTailListInterface<T extends Comparable<? super T>> impleme
 
 	@Override
 	public void display() {
-		System.out.println(aList.toArray().toString());
-		
+		//System.out.println(aList.toArray().toString());
+		System.out.print(aList.getLength() + " elements. [");
+		for( int i = 1; i<=aList.getLength(); i++){
+			if(i == aList.getLength()){
+				System.out.println(aList.getEntry(i) + "]");
+			}
+			else{
+				System.out.print(aList.getEntry(i) + ", ");
+			}
+		}
 	}
 
 	@Override
